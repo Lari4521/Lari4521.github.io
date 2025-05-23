@@ -1,24 +1,26 @@
 function canjearCodigo() {
-  const codigo = document.getElementById('codigo').value.trim();
-  const mensaje = document.getElementById('mensaje-canjeo');
+  const codigoIngresado = document.getElementById("codigo").value.trim();
+  const mensaje = document.getElementById("mensaje-canjeo");
+  const botonDescarga = document.getElementById("descarga");
 
   const codigoValido = "FISICA2025";
 
-  if (localStorage.getItem("codigo_canjeado") === "true") {
-    mensaje.className = "alert alert-warning";
-    mensaje.innerText = "Este código ya fue usado. Solicita uno nuevo.";
-    mensaje.classList.remove("d-none");
-    return;
-  }
-
-  if (codigo === codigoValido) {
-    mensaje.className = "alert alert-success";
-    mensaje.innerText = "¡Código válido! Contenido desbloqueado.";
-    mensaje.classList.remove("d-none");
-    localStorage.setItem("codigo_canjeado", "true");
+  if (codigoIngresado === codigoValido) {
+    mensaje.textContent = "¡Código válido! Puedes descargar el contenido completo.";
+    mensaje.style.color = "green";
+    botonDescarga.classList.remove("d-none");
   } else {
-    mensaje.className = "alert alert-danger";
-    mensaje.innerText = "Código incorrecto.";
-    mensaje.classList.remove("d-none");
+    mensaje.textContent = "Código inválido. Verifica con el vendedor.";
+    mensaje.style.color = "red";
+    botonDescarga.classList.add("d-none");
   }
+}
+
+function descargarArchivo() {
+  const link = document.createElement('a');
+  link.href = "fisica-completo.pdf";
+  link.download = "fisica-completo.pdf";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
